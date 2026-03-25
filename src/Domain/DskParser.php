@@ -1,0 +1,173 @@
+<?php
+
+class DskParser
+{
+    /**
+     * Parse un fichier Extended DSK et retourne les données brutes structurées.
+     *
+     * @return array{header: array, tracks: array, rawSectors: array}
+     */
+    public function parse(string $path): array
+    {
+        $h = fopen($path, 'rb');
+        if (!$h) {
+            throw new \RuntimeException("Impossible d'ouvrir le fichier : $path");
+        }
+
+        $header     = $this->parseHeader($h);
+        $trackSizes = $this->readTrackSizeTable($header['raw'], $header['nbTracks'], $header['nbSides']);
+
+        $tracks     = [];
+        $rawSectors = [];
+        $pos        = 256;
+
+        for ($t = 0; $t < $header['nbTracks'] * $header['nbSides']; $t++) {
+            $tSize = $trackSizes[$t] ?? 0;
+            if ($tSize === 0) continue;
+
+            fseek($h, $pos);
+            $trackHdr = fread($h, 256);
+
+            if (substr($trackHdr, 0, 10) !== 'Track-Info') {
+                $pos += $tSize;
+                continue;
+            }
+
+            $track = $this->parseTrackHeader($trackHdr);
+            $track['sectors'] = $this->parseSectors($h, $pos, $track['spt'], $track['sectorInfos'], $track['filler']);
+
+            $tracks[]     = $track;
+            $rawSectors   = array_merge($rawSectors, $track['sectors']);
+
+            $pos += $tSize;
+        }
+
+        fclose($h);
+
+        return [
+            'path'       => $path,
+            'fileSize'   => filesize($path),
+            'header'     => $header,
+            'trackSizes' => $trackSizes,
+            'tracks'     => $tracks,
+            'rawSectors' => $rawSectors,
+        ];
+    }
+
+    // ----------------------------------------------------------------
+    // Privé
+    // ----------------------------------------------------------------
+
+    private function parseHeader($h): array
+    {
+        $raw     = fread($h, 256);
+        $creator = rtrim(substr($raw, 0x22, 14));
+        $format  = rtrim(substr($raw, 0, 34));
+
+        return [
+            'raw'      => $raw,
+            'format'   => $format,
+            'creator'  => $creator,
+            'nbTracks' => ord($raw[0x30]),
+            'nbSides'  => ord($raw[0x31]),
+        ];
+    }
+
+    private function readTrackSizeTable(string $raw, int $nbTracks, int $nbSides): array
+    {
+        $sizes = [];
+        for ($i = 0; $i < $nbTracks * $nbSides; $i++) {
+            $sizes[] = ord($raw[0x34 + $i]) * 256;
+        }
+        return $sizes;
+    }
+
+    private function parseTrackHeader(string $hdr): array
+    {
+        $spt         = ord($hdr[0x15]);
+        $sectorInfos = [];
+
+        for ($s = 0; $s < $spt; $s++) {
+            $base     = 0x18 + $s * 8;
+            $sN       = ord($hdr[$base + 3]);
+            $realSize = ord($hdr[$base + 6]) | (ord($hdr[$base + 7]) << 8);
+            if ($realSize === 0) {
+                $realSize = 128 << $sN;
+            }
+
+            $sectorInfos[] = [
+                'C'        => ord($hdr[$base]),
+                'H'        => ord($hdr[$base + 1]),
+                'R'        => ord($hdr[$base + 2]),
+                'N'        => $sN,
+                'sr1'      => ord($hdr[$base + 4]),
+                'sr2'      => ord($hdr[$base + 5]),
+                'realSize' => $realSize,
+            ];
+        }
+
+        return [
+            'num'         => ord($hdr[0x10]),
+            'side'        => ord($hdr[0x11]),
+            'sectorN'     => ord($hdr[0x14]),
+            'spt'         => $spt,
+            'gap'         => ord($hdr[0x16]),
+            'filler'      => ord($hdr[0x17]),
+            'sectorInfos' => $sectorInfos,
+        ];
+    }
+
+    private function parseSectors($h, int $trackPos, int $spt, array $sectorInfos, int $filler): array
+    {
+        $dataPos = $trackPos + 256;
+        $sectors = [];
+
+        foreach ($sectorInfos as $si) {
+            fseek($h, $dataPos);
+            $data    = fread($h, $si['realSize']);
+            $dataPos += $si['realSize'];
+
+            $declSize = 128 << $si['N'];
+            $len      = strlen($data);
+            $sumData  = 0;
+            for ($b = 0; $b < $len; $b++) {
+                $sumData += ord($data[$b]);
+            }
+
+            $isWeak   = (bool)(($si['sr1'] & 0x20) || ($si['sr2'] & 0x20));
+            $isErased = (bool)($si['sr2'] & 0x40);
+            $isUsed   = $this->isSectorUsed($data, $filler);
+
+            $sectors[] = [
+                'track'      => $si['C'],
+                'side'       => $si['H'],
+                'C'          => $si['C'],
+                'H'          => $si['H'],
+                'R'          => $si['R'],
+                'N'          => $si['N'],
+                'declSize'   => $declSize,
+                'realSize'   => $si['realSize'],
+                'sumData'    => $sumData,
+                'sr1'        => $si['sr1'],
+                'sr2'        => $si['sr2'],
+                'isWeak'     => $isWeak,
+                'isErased'   => $isErased,
+                'isUsed'     => $isUsed,
+                'isIncomplete' => ($si['realSize'] !== $declSize),
+                'data'       => $data,
+            ];
+        }
+
+        return $sectors;
+    }
+
+    private function isSectorUsed(string $data, int $filler): bool
+    {
+        $len = strlen($data);
+        if ($len === 0) return false;
+        for ($b = 0; $b < $len; $b++) {
+            if (ord($data[$b]) !== $filler) return true;
+        }
+        return false;
+    }
+}

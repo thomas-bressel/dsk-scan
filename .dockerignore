@@ -1,0 +1,5 @@
+# Fichiers inutiles dans l'image Docker
+files/*.dsk
+screenshot/
+.git/
+README.md

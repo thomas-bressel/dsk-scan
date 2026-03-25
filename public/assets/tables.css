@@ -1,0 +1,49 @@
+/* ===== TABLES ===== */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+.data-table th {
+    background: var(--bg);
+    color: var(--accent);
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: .5px;
+}
+.data-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+.data-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+.data-table tr:hover td { background: rgba(79,195,247,.05); }
+.data-table td.center { text-align: center; }
+.data-table td.mono { font-family: monospace; font-size: 12px; }
+
+/* ===== BADGES ===== */
+.badge {
+    display: inline-block;
+    padding: 2px 8px; border-radius: 4px;
+    font-size: 11px; font-weight: 600;
+}
+.badge-yes    { background: rgba(0,230,118,.15); color: var(--green); border: 1px solid var(--green); }
+.badge-no     { background: rgba(122,122,154,.1); color: var(--text-dim); }
+.badge-ro     { background: rgba(255,171,64,.15); color: var(--orange); border: 1px solid var(--orange); }
+.badge-hidden { background: rgba(124,77,255,.15); color: var(--accent2); border: 1px solid var(--accent2); }
+.badge-weak   { background: rgba(255,68,68,.15); color: var(--red); border: 1px solid var(--red); }
+.badge-erased { background: rgba(79,195,247,.15); color: var(--accent); border: 1px solid var(--accent); }
+
+/* ===== SCROLLABLE TABLE ===== */
+.table-scroll { overflow-x: auto; }
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+    text-align: center; padding: 40px;
+    color: var(--text-dim); font-size: 13px;
+}
+.empty-state .es-icon { font-size: 40px; margin-bottom: 10px; }

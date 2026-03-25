@@ -1,0 +1,54 @@
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --bg:       #0d0d1a;
+    --bg2:      #141428;
+    --bg3:      #1c1c38;
+    --border:   #2a2a4a;
+    --accent:   #4fc3f7;
+    --accent2:  #7c4dff;
+    --accent3:  #00e5ff;
+    --text:     #e0e0f0;
+    --text-dim: #7a7a9a;
+    --green:    #00e676;
+    --red:      #ff4444;
+    --orange:   #ffab40;
+    --magenta:  #ff4dff;
+    --tab-h:    44px;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+}
+
+/* ===== HEADER ===== */
+.site-header {
+    background: linear-gradient(135deg, #0d0d2b 0%, #1a0a3a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 30px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.site-header .logo { font-size: 28px; }
+.site-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--accent3), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.site-header .sub {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-left: auto;
+}
+
+/* ===== MAIN LAYOUT ===== */
+.container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }

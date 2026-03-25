@@ -1,0 +1,16 @@
+services:
+  dsk-viewer:
+    build: .
+    container_name: dsk-sector-viewer
+    ports:
+      - "8080:80"
+    volumes:
+      # Monte le code source en live (pratique en développement)
+      # Retirer ce volume en production pour utiliser l'image buildée
+      - .:/var/www/html
+      # Persiste les uploads entre les redémarrages
+      - dsk_uploads:/var/www/html/files
+    restart: unless-stopped
+
+volumes:
+  dsk_uploads:
