@@ -6,6 +6,21 @@ function showTab(name, btn) {
     btn.classList.add('active');
 }
 
+// ===== SECTOR DATA VIEWER =====
+function sdataShow(index) {
+    document.querySelectorAll('.sdata-panel').forEach(p => p.classList.remove('active'));
+    const panel = document.getElementById('sdata-panel-' + index);
+    if (panel) panel.classList.add('active');
+}
+
+function sdataNav(dir) {
+    const sel = document.getElementById('sdata-select');
+    if (!sel) return;
+    const next = Math.max(0, Math.min(sel.options.length - 1, sel.selectedIndex + dir));
+    sel.selectedIndex = next;
+    sdataShow(next);
+}
+
 // ===== DRAG & DROP UPLOAD =====
 document.addEventListener('DOMContentLoaded', function () {
     const dz = document.getElementById('drop-zone');

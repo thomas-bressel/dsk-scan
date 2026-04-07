@@ -34,6 +34,7 @@
             <button class="tab-btn" onclick="showTab('sectors', this)">🔲 Sectors</button>
             <button class="tab-btn" onclick="showTab('tracks', this)">🎵 Tracks</button>
             <button class="tab-btn" onclick="showTab('infos', this)">ℹ️ Infos</button>
+            <button class="tab-btn" onclick="showTab('data', this)">📊 Data</button>
         </div>
 
         <?php include __DIR__ . '/tabs/tab_disk.php'; ?>
@@ -42,6 +43,7 @@
         <?php include __DIR__ . '/tabs/tab_sectors.php'; ?>
         <?php include __DIR__ . '/tabs/tab_tracks.php'; ?>
         <?php include __DIR__ . '/tabs/tab_infos.php'; ?>
+        <?php include __DIR__ . '/tabs/tab_data.php'; ?>
 
     </div><!-- /tabs-wrapper -->
 
