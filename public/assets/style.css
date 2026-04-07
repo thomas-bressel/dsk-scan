@@ -478,6 +478,56 @@ body {
 .fdc-table td:nth-child(2) { color: var(--text); font-weight: 700; white-space: nowrap; }
 .fdc-table tr:last-child td { border-bottom: none; }
 
+/* ===== DISK VISUAL MAP ===== */
+.disk-visual-card {
+    margin-top: 24px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.disk-visual-title {
+    background: var(--bg3);
+    color: var(--accent3);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+}
+.disk-visual-wrap {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.disk-svg {
+    width: 420px;
+    max-width: 100%;
+    height: auto;
+    flex-shrink: 0;
+}
+.disk-sector-path { transition: opacity .15s; cursor: pointer; }
+.disk-sector-path:hover { opacity: 1 !important; filter: brightness(1.3); }
+
+.disk-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--text-dim);
+}
+.dl-item { display: flex; align-items: center; gap: 8px; }
+.dl-swatch {
+    width: 16px; height: 16px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,.15);
+}
+
 /* ===== SECTOR DATA TAB ===== */
 .sdata-toolbar {
     display: flex;
@@ -506,8 +556,8 @@ body {
 }
 #sdata-select:focus { outline: 1px solid var(--accent); }
 
-.sdata-panel { display: none; }
-.sdata-panel.active { display: block; }
+.sdata-panel { display: none !important; }
+.sdata-panel.active { display: block !important; }
 
 .sdata-size {
     font-size: 12px;

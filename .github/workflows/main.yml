@@ -47,13 +47,13 @@ jobs:
           cd /var/www/applications/dsk-sector-view/website/production
 
           # Récupérer la nouvelle image
-          docker compose pull dsk-sector-viewer
+          docker compose pull dsk-sector-view
 
           # Recréer et relancer le container avec la nouvelle image
-          docker compose up -d --force-recreate --no-deps dsk-sector-viewer
+          docker compose up -d --force-recreate --no-deps dsk-sector-view
 
           # Vérifier le statut
-          docker compose ps dsk-sector-viewer
+          docker compose ps dsk-sector-view
 
           # Nettoyer les anciennes images
           docker image prune -f

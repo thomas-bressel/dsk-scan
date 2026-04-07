@@ -6,6 +6,23 @@ function showTab(name, btn) {
     btn.classList.add('active');
 }
 
+// ===== DISK VISUAL — clic secteur → onglet Data =====
+function diskSectorClick(index) {
+    // Activer l'onglet Data
+    const dataBtn = document.querySelector('.tab-btn[onclick*="data"]');
+    showTab('data', dataBtn);
+
+    // Sélectionner le bon secteur
+    const sel = document.getElementById('sdata-select');
+    if (sel) {
+        sel.selectedIndex = index;
+        sdataShow(index);
+    }
+
+    // Scroll vers le haut
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 // ===== SECTOR DATA VIEWER =====
 function sdataShow(index) {
     document.querySelectorAll('.sdata-panel').forEach(p => p.classList.remove('active'));
