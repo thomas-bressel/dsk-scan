@@ -31,6 +31,21 @@ return [
     'upload_dropzone'   => 'Arrastre su archivo aquí o <span>haga clic para buscar</span>',
     'upload_btn'        => '🔍 Analizar archivo',
 
+    // ── Flags de sector (tooltips / visualización) ────────────────────────────
+    'flag_used'         => 'USADO',
+    'flag_weak'         => 'DÉBIL',
+    'flag_erased'       => 'BORRADO',
+    'flag_incomplete'   => 'INCOMPLETO',
+    'map_size_label'    => 'Tamaño ',
+    'map_size_gt8'      => 'Tamaño >8',
+
+    // ── Unidades ──────────────────────────────────────────────────────────────
+    'unit_bytes'        => 'bytes',
+    'unit_ko'           => 'KB',
+    'unit_mo'           => 'MB',
+    'unit_o'            => 'B',
+    'disk_side_label'   => 'Cara',
+
     // ── Tab Disk ──────────────────────────────────────────────────────────────
     'disk_visual_title'     => '💿 Mapa visual del disco',
     'disk_legend_used'      => 'Usado',
@@ -53,6 +68,7 @@ return [
     'disk_spec_track_size_diff' => ': Diferencia de tamaño',
     'disk_spec_all_sect_decl'   => ': Tamaño declarado de todos los sectores',
     'disk_spec_sum_data'    => ': Sum DATA',
+    'disk_sector_size_label'    => 'Tamaño sector',
     'disk_side_sectors_title'   => '📊 Cara %d — Tamaños de sector & flags',
     'disk_total_sectors'    => 'TOTAL SECTORES',
     'disk_sector_used'      => 'Sector USADO',

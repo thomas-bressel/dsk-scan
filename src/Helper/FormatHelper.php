@@ -13,17 +13,21 @@
 class FormatHelper
 {
     /**
-     * Formats a byte count as a human-readable size string.
-     * Uses Mo/Ko/o suffixes (SI-compatible, French/international convention).
+     * Formats a byte count as a human-readable size string using localised unit labels.
      *
-     * @param  int    $b Number of bytes
-     * @return string    Formatted string, e.g. "1.44 Mo", "512.00 Ko", "128 o"
+     * @param  int    $b     Number of bytes
+     * @param  array  $t     Translation array (must contain unit_mo, unit_ko, unit_o keys)
+     * @return string        Formatted string, e.g. "1.44 Mo", "512.00 KB", "128 B"
      */
-    public static function bytes(int $b): string
+    public static function bytes(int $b, array $t = []): string
     {
-        if ($b >= 1024 * 1024) return number_format($b / 1024 / 1024, 2) . ' Mo';
-        if ($b >= 1024)        return number_format($b / 1024, 2) . ' Ko';
-        return $b . ' o';
+        $mo = $t['unit_mo'] ?? 'Mo';
+        $ko = $t['unit_ko'] ?? 'Ko';
+        $o  = $t['unit_o']  ?? 'o';
+
+        if ($b >= 1024 * 1024) return number_format($b / 1024 / 1024, 2) . ' ' . $mo;
+        if ($b >= 1024)        return number_format($b / 1024, 2) . ' ' . $ko;
+        return $b . ' ' . $o;
     }
 
     /**
@@ -71,21 +75,23 @@ class FormatHelper
     /**
      * Builds a human-readable tooltip string for a sector block (used in the MAP tab).
      *
-     * Format: "T{track} Sector #{R} — {size} bytes [{status}] [{flags}]"
+     * Format: "T{track} Sector #{R} — {size} {unit} [{status}] [{flags}]"
      *
      * @param  array  $s Sector entry array
+     * @param  array  $t Translation array
      * @return string    Tooltip string
      */
-    public static function sectorTooltip(array $s): string
+    public static function sectorTooltip(array $s, array $t = []): string
     {
         $size   = 128 << $s['N'];
-        $status = $s['isUsed'] ? 'used' : 'empty';
+        $unit   = $t['unit_o'] ?? 'o';
+        $status = $s['isUsed'] ? ($t['flag_used'] ?? 'USED') : ($t['unit_o'] ?? 'empty');
         $extra  = [];
-        if ($s['isWeak'])       $extra[] = 'WEAK';
-        if ($s['isErased'])     $extra[] = 'ERASED';
-        if ($s['isIncomplete']) $extra[] = 'INCOMPLETE';
+        if ($s['isWeak'])       $extra[] = $t['flag_weak']       ?? 'WEAK';
+        if ($s['isErased'])     $extra[] = $t['flag_erased']     ?? 'ERASED';
+        if ($s['isIncomplete']) $extra[] = $t['flag_incomplete']  ?? 'INCOMPLETE';
         $flags  = $extra ? ' [' . implode('+', $extra) . ']' : '';
-        return 'T' . $s['track'] . ' Sector ' . self::hex($s['R']) . ' — ' . $size . ' bytes [' . $status . ']' . $flags;
+        return 'T' . $s['track'] . ' S#' . self::hex($s['R']) . ' — ' . $size . ' ' . $unit . ' [' . $status . ']' . $flags;
     }
 
     /**

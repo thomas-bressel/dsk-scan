@@ -9,7 +9,7 @@
             <?php
             for ($n = 0; $n <= 9; $n++):
                 $cnt = $ms['sizeCounts'][$n] ?? 0;
-                $lbl = $n < 9 ? 'Size ' . $n : 'Size >8';
+                $lbl = $n < 9 ? $t['map_size_label'] . $n : $t['map_size_gt8'];
             ?>
             <div class="map-stat-cell <?= $cnt > 0 ? 'has-value' : '' ?>">
                 <div class="msc-label"><?= $lbl ?></div>
@@ -82,7 +82,7 @@
                 <div class="map-sectors">
                 <?php foreach ($secs as $s):
                     $cls = FormatHelper::sectorCssClass($s);
-                    $tip = FormatHelper::sectorTooltip($s);
+                    $tip = FormatHelper::sectorTooltip($s, $t);
                 ?>
                 <div class="sector-block <?= $cls ?> tooltip" data-tip="<?= htmlspecialchars($tip) ?>">
                     <?= strtoupper(dechex($s['R'])) ?>

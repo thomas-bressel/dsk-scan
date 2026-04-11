@@ -16,7 +16,7 @@
         <tr>
             <td class="center"><?= $tk['num'] ?></td>
             <td class="center"><?= $tk['spt'] ?></td>
-            <td><?= number_format($tk['totalBytes']) ?><?= $t['tracks_unit_bytes'] ?> (<?= FormatHelper::bytes($tk['totalBytes']) ?>)</td>
+            <td><?= number_format($tk['totalBytes']) ?> <?= $t['unit_bytes'] ?> (<?= FormatHelper::bytes($tk['totalBytes'], $t) ?>)</td>
             <td class="mono center"><?= FormatHelper::hex($tk['gap']) ?></td>
             <td class="mono center"><?= FormatHelper::hex($tk['filler']) ?></td>
             <td class="mono"><?= number_format($tk['sumData']) ?></td>

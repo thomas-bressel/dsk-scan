@@ -25,9 +25,9 @@
             $declSize = $s['declSize'];
             $realSize = $s['realSize'];
             $flags    = [];
-            if ($s['isWeak'])       $flags[] = 'WEAK';
-            if ($s['isErased'])     $flags[] = 'ERASED';
-            if ($s['isIncomplete']) $flags[] = 'INCOMPLETE';
+            if ($s['isWeak'])       $flags[] = $t['flag_weak'];
+            if ($s['isErased'])     $flags[] = $t['flag_erased'];
+            if ($s['isIncomplete']) $flags[] = $t['flag_incomplete'];
             $flagStr  = $flags ? ' / ' . implode(' + ', $flags) : '';
         ?>
         <div class="sdata-panel <?= $i === 0 ? 'active' : '' ?>" id="sdata-panel-<?= $i ?>">

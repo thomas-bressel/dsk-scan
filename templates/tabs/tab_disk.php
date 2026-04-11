@@ -89,11 +89,11 @@
                     $ly     = $cy + $rMid * sin($aMid);
                     $tooltip = 'T' . str_pad($trackNum, 2, '0', STR_PAD_LEFT)
                              . ' S#' . strtoupper(str_pad(dechex($s['R']), 2, '0', STR_PAD_LEFT))
-                             . ' — ' . $s['realSize'] . 'o';
-                    if ($s['isUsed'])       $tooltip .= ' [USED]';
-                    if ($s['isWeak'])       $tooltip .= ' WEAK';
-                    if ($s['isErased'])     $tooltip .= ' ERASED';
-                    if ($s['isIncomplete']) $tooltip .= ' INCOMPLETE';
+                             . ' — ' . $s['realSize'] . ' ' . $t['unit_o'];
+                    if ($s['isUsed'])       $tooltip .= ' [' . $t['flag_used'] . ']';
+                    if ($s['isWeak'])       $tooltip .= ' ' . $t['flag_weak'];
+                    if ($s['isErased'])     $tooltip .= ' ' . $t['flag_erased'];
+                    if ($s['isIncomplete']) $tooltip .= ' ' . $t['flag_incomplete'];
             ?>
                 <path d="<?= $path ?>" fill="<?= $col['fill'] ?>" stroke="#0d0d1a" stroke-width="0.5"
                       opacity="<?= $s['isUsed'] ? '1' : '0.45' ?>" class="disk-sector-path"
@@ -154,24 +154,24 @@
         <div class="spec-card">
             <span class="card-title"><?= $t['disk_spec_title'] ?></span>
             <table>
-                <tr><td><?= $t['disk_spec_dump_size'] ?></td><td><?= number_format($d['fileSize']) ?> (<?= FormatHelper::bytes($d['fileSize']) ?>)</td></tr>
+                <tr><td><?= $t['disk_spec_dump_size'] ?></td><td><?= number_format($d['fileSize']) ?> (<?= FormatHelper::bytes($d['fileSize'], $t) ?>)</td></tr>
                 <tr><td><?= $t['disk_spec_creator'] ?></td><td><?= htmlspecialchars($d['creator']) ?></td></tr>
                 <tr><td><?= $t['disk_spec_format'] ?></td><td><?= htmlspecialchars($d['format']) ?></td></tr>
                 <tr><td><?= $t['disk_spec_sides'] ?></td><td><?= $d['nbSides'] ?></td></tr>
                 <tr><td><?= $t['disk_spec_tracks_fmt'] ?></td><td><?= $d['tracksFormatted'] ?></td></tr>
                 <tr><td><?= $t['disk_spec_tracks_side'] ?></td><td><?= $d['nbTracks'] ?></td></tr>
                 <?php for ($side = 1; $side <= $d['nbSides']; $side++): ?>
-                <tr><td>Side <?= $side ?><?= $t['disk_spec_track_size_decl'] ?></td><td><?= number_format($d['tracksDeclaredSize']) ?> (<?= FormatHelper::bytes($d['tracksDeclaredSize']) ?>)</td></tr>
-                <tr><td>Side <?= $side ?><?= $t['disk_spec_track_size_real'] ?></td><td><?= number_format($d['totalRealBytes']) ?> (<?= FormatHelper::bytes($d['totalRealBytes']) ?>)</td></tr>
+                <tr><td><?= $t['disk_side_label'] ?> <?= $side ?><?= $t['disk_spec_track_size_decl'] ?></td><td><?= number_format($d['tracksDeclaredSize']) ?> (<?= FormatHelper::bytes($d['tracksDeclaredSize'], $t) ?>)</td></tr>
+                <tr><td><?= $t['disk_side_label'] ?> <?= $side ?><?= $t['disk_spec_track_size_real'] ?></td><td><?= number_format($d['totalRealBytes']) ?> (<?= FormatHelper::bytes($d['totalRealBytes'], $t) ?>)</td></tr>
                 <?php $diff = $d['tracksDeclaredSize'] - $d['totalRealBytes']; ?>
                 <?php if ($diff !== 0): ?>
                 <tr>
-                    <td>Side <?= $side ?><?= $t['disk_spec_track_size_diff'] ?></td>
+                    <td><?= $t['disk_side_label'] ?> <?= $side ?><?= $t['disk_spec_track_size_diff'] ?></td>
                     <td style="color:var(--orange);font-weight:600"><?= number_format(abs($diff)) ?></td>
                 </tr>
                 <?php endif; ?>
-                <tr><td>Side <?= $side ?><?= $t['disk_spec_all_sect_decl'] ?></td><td><?= number_format($d['totalDeclaredBytes']) ?> (<?= FormatHelper::bytes($d['totalDeclaredBytes']) ?>)</td></tr>
-                <tr><td>Side <?= $side ?><?= $t['disk_spec_sum_data'] ?></td><td><?= number_format($d['totalSumData']) ?></td></tr>
+                <tr><td><?= $t['disk_side_label'] ?> <?= $side ?><?= $t['disk_spec_all_sect_decl'] ?></td><td><?= number_format($d['totalDeclaredBytes']) ?> (<?= FormatHelper::bytes($d['totalDeclaredBytes'], $t) ?>)</td></tr>
+                <tr><td><?= $t['disk_side_label'] ?> <?= $side ?><?= $t['disk_spec_sum_data'] ?></td><td><?= number_format($d['totalSumData']) ?></td></tr>
                 <?php endfor; ?>
             </table>
         </div>
@@ -184,9 +184,9 @@
                     $cnt   = $d['sizeCounts'][$n] ?? 0;
                     $bytes = $sizeBytes[$n];
                     if ($n < 9) {
-                        $lbl = 'SectorSize ' . $n . ' (' . number_format($bytes) . ')';
+                        $lbl = ($t['disk_sector_size_label'] ?? 'SectorSize') . ' ' . $n . ' (' . number_format($bytes) . ' ' . $t['unit_o'] . ')';
                     } else {
-                        $lbl = 'SectorSize &gt; 8';
+                        $lbl = ($t['disk_sector_size_label'] ?? 'SectorSize') . ' &gt; 8';
                     }
                 ?>
                 <tr>

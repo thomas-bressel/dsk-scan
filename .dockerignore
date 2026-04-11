@@ -2,4 +2,5 @@
 files/*.dsk
 screenshot/
 .git/
+.claude/
 README.md

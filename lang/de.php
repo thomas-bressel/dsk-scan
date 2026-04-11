@@ -31,6 +31,21 @@ return [
     'upload_dropzone'   => 'Datei hier ablegen oder <span>zum Durchsuchen klicken</span>',
     'upload_btn'        => '🔍 Datei analysieren',
 
+    // ── Sektor-Flags (Tooltips / Rohausgabe) ──────────────────────────────────
+    'flag_used'         => 'BELEGT',
+    'flag_weak'         => 'SCHWACH',
+    'flag_erased'       => 'GELÖSCHT',
+    'flag_incomplete'   => 'UNVOLLSTÄNDIG',
+    'map_size_label'    => 'Größe ',
+    'map_size_gt8'      => 'Größe >8',
+
+    // ── Einheiten ─────────────────────────────────────────────────────────────
+    'unit_bytes'        => 'Bytes',
+    'unit_ko'           => 'KB',
+    'unit_mo'           => 'MB',
+    'unit_o'            => 'B',
+    'disk_side_label'   => 'Seite',
+
     // ── Tab Disk ──────────────────────────────────────────────────────────────
     'disk_visual_title'     => '💿 Disk Visual Map',
     'disk_legend_used'      => 'Belegt',
@@ -53,6 +68,7 @@ return [
     'disk_spec_track_size_diff' => ': Größenunterschied',
     'disk_spec_all_sect_decl'   => ': Alle Sektoren Größe deklariert',
     'disk_spec_sum_data'    => ': Sum DATA',
+    'disk_sector_size_label'    => 'Sektorgröße',
     'disk_side_sectors_title'   => '📊 Seite %d — Sektorgrößen & Flags',
     'disk_total_sectors'    => 'SEKTOREN GESAMT',
     'disk_sector_used'      => 'Sektor BELEGT',

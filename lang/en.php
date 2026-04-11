@@ -31,6 +31,21 @@ return [
     'upload_dropzone'   => 'Drag your file here or <span>click to browse</span>',
     'upload_btn'        => '🔍 Analyse file',
 
+    // ── Sector flags (tooltips / raw display) ─────────────────────────────────
+    'flag_used'         => 'USED',
+    'flag_weak'         => 'WEAK',
+    'flag_erased'       => 'ERASED',
+    'flag_incomplete'   => 'INCOMPLETE',
+    'map_size_label'    => 'Size ',
+    'map_size_gt8'      => 'Size >8',
+
+    // ── Units ─────────────────────────────────────────────────────────────────
+    'unit_bytes'        => 'bytes',
+    'unit_ko'           => 'KB',
+    'unit_mo'           => 'MB',
+    'unit_o'            => 'B',
+    'disk_side_label'   => 'Side',
+
     // ── Tab Disk ──────────────────────────────────────────────────────────────
     'disk_visual_title'     => '💿 Disk Visual Map',
     'disk_legend_used'      => 'Used',
@@ -53,6 +68,7 @@ return [
     'disk_spec_track_size_diff' => ': size difference',
     'disk_spec_all_sect_decl'   => ': All Sectors size declared',
     'disk_spec_sum_data'    => ': Sum DATA',
+    'disk_sector_size_label'    => 'SectorSize',
     'disk_side_sectors_title'   => '📊 Side %d — Sector sizes & flags',
     'disk_total_sectors'    => 'TOTAL SECTORS',
     'disk_sector_used'      => 'Sector USED',

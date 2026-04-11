@@ -5,7 +5,7 @@
         <div class="disk-meta">
             <?= htmlspecialchars($d['format']) ?> &nbsp;·&nbsp;
             <?= $t['banner_creator'] ?> <?= htmlspecialchars($d['creator']) ?> &nbsp;·&nbsp;
-            <?= FormatHelper::bytes($d['fileSize']) ?>
+            <?= FormatHelper::bytes($d['fileSize'], $t) ?>
         </div>
     </div>
     <div class="disk-stats">
