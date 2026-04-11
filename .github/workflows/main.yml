@@ -1,4 +1,4 @@
-name: Deploy dsk-sector-view to VPS
+name: Deploy DSKscan to VPS
 
 on:
   push:
@@ -32,9 +32,9 @@ jobs:
         push: true
         no-cache: true
         tags: |
-          ${{ secrets.DOCKERHUB_USERNAME }}/dsk-sector-view:production
-          ${{ secrets.DOCKERHUB_USERNAME }}/dsk-sector-view:${{ github.sha }}
-          ${{ secrets.DOCKERHUB_USERNAME }}/dsk-sector-view:${{ github.run_number }}
+          ${{ secrets.DOCKERHUB_USERNAME }}/dskscan:production
+          ${{ secrets.DOCKERHUB_USERNAME }}/dskscan:${{ github.sha }}
+          ${{ secrets.DOCKERHUB_USERNAME }}/dskscan:${{ github.run_number }}
 
     - name: Deploy to VPS
       uses: appleboy/ssh-action@v1.0.3
@@ -44,16 +44,16 @@ jobs:
         key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
         port: ${{ secrets.VPS_PORT }}
         script: |
-          cd /var/www/applications/dsk-sector-view/production
+          cd /var/www/applications/dskscan/production
 
           # Récupérer la nouvelle image
-          docker compose pull dsk-sector-view
+          docker compose pull dskscan
 
           # Recréer et relancer le container avec la nouvelle image
-          docker compose up -d --force-recreate --no-deps dsk-sector-view
+          docker compose up -d --force-recreate --no-deps dskscan
 
           # Vérifier le statut
-          docker compose ps dsk-sector-view
+          docker compose ps dskscan
 
           # Nettoyer les anciennes images
           docker image prune -f
