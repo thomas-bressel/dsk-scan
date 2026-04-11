@@ -1,5 +1,16 @@
 # Changelog — DSKscan
 
+## [1.0.1] — 2026-04-11
+
+### Changed
+- Application renamed from *DSK Tool PHP* to **DSKscan**
+- Logo width set to 200px via CSS (`.upload-card .logo-big`)
+- PHPDoc fully translated to English across all classes
+- `LOG.md` changelog added
+- `.gitignore` added
+
+---
+
 ## [1.0.0] — 2026-04-11
 
 ### Added
