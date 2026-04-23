@@ -224,10 +224,9 @@ class CdtParser
         $dataLen    = $this->u24($raw, 15);
         $data       = ($dataLen > 0) ? fread($h, $dataLen) : '';
 
-        // Calcul précis (approximation 50/50 bits 0 et 1)
-        $totalBits  = $dataLen * 8 - (8 - $usedBits);
-        $avgBitT    = ($zeroPulse + $onePulse); // 2 pulses par bit, moyenne des 2
-        $totalT     = $pilotPulse * $pilotCount + $sync1 + $sync2 + $totalBits * $avgBitT;
+        // Exact bit count: each 0-bit = 2×zeroPulse T-states, each 1-bit = 2×onePulse T-states
+        $totalT = $pilotPulse * $pilotCount + $sync1 + $sync2
+                + $this->countBitDuration($data, $usedBits, $zeroPulse, $onePulse);
         $durationMs = (int)($totalT * 1000 / $clock);
 
         return array_merge($b, [
@@ -603,6 +602,36 @@ class CdtParser
     }
 
     // ── Helpers binaires ─────────────────────────────────────────────────────
+
+    /**
+     * Computes exact T-state duration by counting actual 0 and 1 bits.
+     * Each bit is encoded as 2 pulses: 0-bit = 2×zeroPulse, 1-bit = 2×onePulse.
+     */
+    private function countBitDuration(string $data, int $usedBits, int $zeroPulse, int $onePulse): int
+    {
+        $len = strlen($data);
+        if ($len === 0) return 0;
+
+        $totalT  = 0;
+        $twoZero = 2 * $zeroPulse;
+        $twoOne  = 2 * $onePulse;
+
+        // All bytes except the last
+        for ($i = 0; $i < $len - 1; $i++) {
+            $byte = ord($data[$i]);
+            for ($bit = 7; $bit >= 0; $bit--) {
+                $totalT += ($byte >> $bit & 1) ? $twoOne : $twoZero;
+            }
+        }
+
+        // Last byte: only usedBits significant bits (MSB first)
+        $lastByte = ord($data[$len - 1]);
+        for ($bit = 7; $bit > 7 - $usedBits; $bit--) {
+            $totalT += ($lastByte >> $bit & 1) ? $twoOne : $twoZero;
+        }
+
+        return $totalT;
+    }
 
     /** Somme de tous les octets */
     private function sumBytes(string $data): int

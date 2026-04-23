@@ -34,23 +34,28 @@ class CdtStats
                 ];
             }
 
+            // For PAUSE blocks the pause IS the duration, not a "pause after a data block"
+            $pauseAfter = ($type === 0x20) ? 0 : ($block['pause'] ?? 0);
+
             $typeSummary[$type]['count']++;
             $typeSummary[$type]['durationMs'] += $block['durationMs'];
-            $typeSummary[$type]['pauseMs']    += $block['pause'] ?? 0;
+            $typeSummary[$type]['pauseMs']    += $pauseAfter;
             $typeSummary[$type]['totalMs']    += $block['totalMs'];
 
             $totalDurationMs += $block['durationMs'];
-            $totalPauseMs    += $block['pause'] ?? 0;
+            $totalPauseMs    += $pauseAfter;
             $totalSumData    += $block['sumData'] ?? 0;
 
             if ($block['dataLen'] > 0) $totalDataBlocks++;
         }
 
         // ── CheckData ──────────────────────────────────────────────────────────
-        // Comptage par taille (1 octet / 3 octets / autre) pour affichage
+        // Only binary data blocks (not text/metadata blocks like 0x30, 0x31, etc.)
+        $binaryDataTypes = [0x10, 0x11, 0x14, 0x15, 0x18, 0x19];
         $checkDataRows = [];
         foreach ($blocks as $block) {
-            if (($block['sumData'] ?? 0) === 0 && $block['dataLen'] === 0) continue;
+            if (!in_array($block['type'], $binaryDataTypes, true)) continue;
+            if ($block['dataLen'] === 0) continue;
             $checkDataRows[] = [
                 'index'    => $block['index'],
                 'typeName' => $block['typeName'],
