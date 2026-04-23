@@ -1,5 +1,23 @@
     <div id="tab-infos" class="tab-panel">
 
+        <div class="info-section" style="border-left-color:var(--text-dim)">
+            <h3><?= $t['infos_fdc_errors_title'] ?></h3>
+            <p><?= $t['infos_fdc_errors_desc'] ?></p>
+        </div>
+
+        <div class="info-section" style="border-left-color:var(--orange)">
+            <h3><?= $t['infos_incomplete_title'] ?></h3>
+            <div class="info-color-row">
+                <span class="info-swatch-block" style="background:#fff;color:#333;border:2px dashed green"><?= $t['infos_incomplete_label'] ?></span>
+            </div>
+            <p><?= $t['infos_incomplete_desc'] ?></p>
+        </div>
+
+        <div class="info-section" style="border-left-color:var(--accent2)">
+            <h3><?= $t['infos_gaps_title'] ?></h3>
+            <p><?= $t['infos_gaps_desc'] ?></p>
+        </div>
+
         <div class="info-section" style="border-left-color:#FF0000">
             <h3><span class="info-swatch" style="background:#FF0000"></span> <?= $t['infos_weak_title'] ?></h3>
             <div class="info-color-row">
@@ -28,12 +46,9 @@
             <p><?= $t['infos_erased_weak_desc'] ?></p>
         </div>
 
-        <div class="info-section" style="border-left-color:var(--orange)">
-            <h3><?= $t['infos_incomplete_title'] ?></h3>
-            <div class="info-color-row">
-                <span class="info-swatch-block" style="background:#fff;color:#333;border:2px dashed green"><?= $t['infos_incomplete_label'] ?></span>
-            </div>
-            <p><?= $t['infos_incomplete_desc'] ?></p>
+        <div class="info-section" style="border-left-color:var(--text-dim)">
+            <h3><?= $t['infos_sum_data_title'] ?></h3>
+            <p><?= $t['infos_sum_data_desc'] ?></p>
         </div>
 
         <div class="info-section" style="border-left-color:var(--orange)">
@@ -41,16 +56,6 @@
             <p><?= $t['infos_prot6_cpc'] ?></p>
             <p style="margin-top:8px"><?= $t['infos_prot6_copy'] ?></p>
             <p style="margin-top:8px"><?= $t['infos_prot6_mastering'] ?></p>
-        </div>
-
-        <div class="info-section" style="border-left-color:var(--text-dim)">
-            <h3><?= $t['infos_fdc_errors_title'] ?></h3>
-            <p><?= $t['infos_fdc_errors_desc'] ?></p>
-        </div>
-
-        <div class="info-section" style="border-left-color:var(--accent2)">
-            <h3><?= $t['infos_gaps_title'] ?></h3>
-            <p><?= $t['infos_gaps_desc'] ?></p>
         </div>
 
         <div class="info-section" style="border-left-color:var(--accent)">
@@ -85,10 +90,5 @@
                 <?php endforeach; ?>
             </ul>
             <p style="margin-top:8px"><?= $t['infos_fat_user229'] ?></p>
-        </div>
-
-        <div class="info-section" style="border-left-color:var(--text-dim)">
-            <h3><?= $t['infos_sum_data_title'] ?></h3>
-            <p><?= $t['infos_sum_data_desc'] ?></p>
         </div>
     </div>
