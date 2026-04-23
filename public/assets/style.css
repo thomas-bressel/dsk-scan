@@ -642,81 +642,52 @@ body {
 }
 .empty-state .es-icon { font-size: 40px; margin-bottom: 10px; }
 
-/* ===== HOME CHOOSER (DSK + CDT côte à côte) ===== */
-.home-chooser {
+/* ===== HOME DUAL UPLOAD (DSK + CDT côte à côte) ===== */
+.upload-dual {
     display: flex;
-    align-items: stretch;
+    align-items: flex-start;
+    justify-content: center;
     gap: 0;
-    max-width: 900px;
     margin: 60px auto;
+    max-width: 1160px;
 }
 
-.chooser-card {
+.upload-dual .upload-card {
+    margin: 0;
     flex: 1;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 36px 32px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: border-color .2s, box-shadow .2s;
-}
-.chooser-card:hover {
-    border-color: var(--accent);
-    box-shadow: 0 0 20px rgba(79,195,247,.08);
+    max-width: 500px;
 }
 
-.chooser-icon { font-size: 52px; margin-bottom: 14px; }
-.chooser-title { font-size: 18px; margin-bottom: 8px; color: var(--accent3); }
-.chooser-desc { color: var(--text-dim); font-size: 13px; margin-bottom: 20px; }
-
-.chooser-card form { width: 100%; }
-.chooser-card .drop-zone { margin-bottom: 16px; }
-
-.chooser-sep {
+.upload-sep {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 24px;
+    align-self: center;
+    padding: 0 28px;
+    flex-shrink: 0;
     color: var(--text-dim);
     font-size: 13px;
-    flex-shrink: 0;
 }
-.chooser-sep span {
+.upload-sep span {
     background: var(--bg);
-    padding: 6px 10px;
+    padding: 6px 12px;
     border-radius: 20px;
     border: 1px solid var(--border);
 }
 
-/* Bouton DSK */
-.btn-dsk {
-    background: linear-gradient(135deg, #1a3a6a, #2a5aaa);
-    border-color: #2a5aaa;
+/* Bouton tape (violet) */
+.btn-tape {
+    background: linear-gradient(135deg, var(--accent2), #c040ff);
 }
-.btn-dsk:hover { opacity: .9; }
 
-/* Bouton CDT */
-.btn-cdt {
-    background: linear-gradient(135deg, #3a1a5a, #6a2aaa);
-    border-color: #6a2aaa;
-}
-.btn-cdt:hover { opacity: .9; }
-
-/* Badges format */
-.format-badges {
+/* Badges format sous la carte CDT */
+.tape-fmt-badges {
     display: flex; gap: 8px; justify-content: center;
-    flex-wrap: wrap; margin-top: 16px;
+    flex-wrap: wrap; margin-top: 20px;
 }
 .fmt-badge {
     display: inline-flex; align-items: center; gap: 5px;
     padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;
-}
-.fmt-badge.dsk {
-    background: rgba(79,195,247,.1); color: var(--accent);
-    border: 1px solid rgba(79,195,247,.3);
 }
 .fmt-badge.cdt {
     background: rgba(0,229,255,.1); color: var(--accent3);
@@ -727,9 +698,10 @@ body {
     border: 1px solid rgba(124,77,255,.3);
 }
 
-@media (max-width: 640px) {
-    .home-chooser { flex-direction: column; max-width: 400px; }
-    .chooser-sep { padding: 16px 0; }
+@media (max-width: 860px) {
+    .upload-dual { flex-direction: column; align-items: center; }
+    .upload-dual .upload-card { max-width: 560px; width: 100%; }
+    .upload-sep { padding: 20px 0; }
 }
 
 /* ===== TAPE BANNER ===== */
