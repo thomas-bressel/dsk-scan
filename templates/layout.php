@@ -77,10 +77,10 @@
 
     <div class="tabs-wrapper">
         <div class="tabs-nav">
-            <button class="tab-btn active" onclick="showTab('blocks', this)">📋 Blocks</button>
-            <button class="tab-btn" onclick="showTab('catalogue', this)">📁 Catalogue</button>
-            <button class="tab-btn" onclick="showTab('data', this)">📊 Data</button>
-            <button class="tab-btn" onclick="showTab('infos', this)">ℹ️ Infos</button>
+            <button class="tab-btn active" onclick="showTab('blocks', this)"><?= $t['tape_tab_blocks'] ?></button>
+            <button class="tab-btn" onclick="showTab('catalogue', this)"><?= $t['tape_tab_catalogue'] ?></button>
+            <button class="tab-btn" onclick="showTab('data', this)"><?= $t['tape_tab_data'] ?></button>
+            <button class="tab-btn" onclick="showTab('infos', this)"><?= $t['tape_tab_infos'] ?></button>
         </div>
 
         <?php include __DIR__ . '/tape/tab_blocks.php'; ?>

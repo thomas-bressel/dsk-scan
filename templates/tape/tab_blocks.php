@@ -2,17 +2,17 @@
 
     <!-- ══ Résumé par type ══════════════════════════════════════════════════ -->
     <div class="spec-card" style="margin-bottom:24px">
-        <span class="card-title">📋 Récapitulatif des blocs</span>
+        <span class="card-title"><?= $t['blocks_summary_title'] ?></span>
         <div class="table-scroll">
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>Type de bloc</th>
-                    <th class="center">Nb</th>
-                    <th class="right">Durée bloc (ms)</th>
-                    <th class="right">Pause après (ms)</th>
-                    <th class="right">Total (ms)</th>
-                    <th class="right">Durée</th>
+                    <th><?= $t['blocks_col_type'] ?></th>
+                    <th class="center"><?= $t['blocks_col_nb'] ?></th>
+                    <th class="right"><?= $t['blocks_col_duration'] ?></th>
+                    <th class="right"><?= $t['blocks_col_pause'] ?></th>
+                    <th class="right"><?= $t['blocks_col_total_ms'] ?></th>
+                    <th class="right"><?= $t['blocks_col_time'] ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -32,7 +32,7 @@
             </tbody>
             <tfoot>
                 <tr class="total-row">
-                    <td><strong>TOTAL</strong></td>
+                    <td><strong><?= $t['blocks_total'] ?></strong></td>
                     <td class="center mono"><strong><?= $d['blockCount'] ?></strong></td>
                     <td class="right mono"><strong><?= number_format($d['totalDurationMs']) ?></strong></td>
                     <td class="right mono"><strong><?= number_format($d['totalPauseMs']) ?></strong></td>
@@ -46,10 +46,10 @@
 
     <!-- ══ CheckData ═══════════════════════════════════════════════════════ -->
     <div class="spec-card" style="margin-bottom:24px">
-        <span class="card-title">🔢 Check Data</span>
+        <span class="card-title"><?= $t['blocks_checkdata_title'] ?></span>
         <div class="checkdata-summary">
             <div class="cd-total">
-                <span class="cd-label">Somme de toutes les données</span>
+                <span class="cd-label"><?= $t['blocks_checkdata_sum'] ?></span>
                 <span class="cd-value"><?= number_format($d['totalSumData']) ?></span>
             </div>
         </div>
@@ -59,12 +59,12 @@
         <table class="data-table">
             <thead>
                 <tr>
-                    <th class="center">Bloc</th>
-                    <th>Type</th>
-                    <th class="right">Sum DATA</th>
-                    <th class="center">Bits utilisés</th>
-                    <th class="center">Dernier octet</th>
-                    <th class="right">Données (octets)</th>
+                    <th class="center"><?= $t['blocks_col_block'] ?></th>
+                    <th><?= $t['blocks_col_type'] ?></th>
+                    <th class="right"><?= $t['blocks_col_sum_data'] ?></th>
+                    <th class="center"><?= $t['blocks_col_used_bits'] ?></th>
+                    <th class="center"><?= $t['blocks_col_last_byte'] ?></th>
+                    <th class="right"><?= $t['blocks_col_data_bytes'] ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -94,18 +94,18 @@
 
     <!-- ══ Détail de chaque bloc ════════════════════════════════════════════ -->
     <div class="spec-card">
-        <span class="card-title">🔎 Détail des blocs</span>
+        <span class="card-title"><?= $t['blocks_detail_title'] ?></span>
         <div class="table-scroll">
         <table class="data-table blocks-detail-table">
             <thead>
                 <tr>
-                    <th class="center">Index</th>
-                    <th>Type</th>
-                    <th class="right">Durée (ms)</th>
-                    <th class="right">Pause (ms)</th>
-                    <th class="right">Données</th>
-                    <th class="right">Sum DATA</th>
-                    <th>Infos</th>
+                    <th class="center"><?= $t['blocks_col_index'] ?></th>
+                    <th><?= $t['blocks_col_type'] ?></th>
+                    <th class="right"><?= $t['blocks_col_dur_ms'] ?></th>
+                    <th class="right"><?= $t['blocks_col_pause_ms'] ?></th>
+                    <th class="right"><?= $t['blocks_col_data'] ?></th>
+                    <th class="right"><?= $t['blocks_col_sum_data'] ?></th>
+                    <th><?= $t['blocks_col_infos'] ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -121,17 +121,12 @@
                 <td class="right mono"><?= $block['dataLen'] > 0 ? number_format($block['dataLen']) : '—' ?></td>
                 <td class="right mono"><?= ($block['sumData'] ?? 0) > 0 ? number_format($block['sumData']) : '—' ?></td>
                 <td class="block-info-cell">
-                    <?php
-                    // Informations contextuelles selon le type
-                    switch ($block['type']) {
+                    <?php switch ($block['type']) {
                         case 0x11:
                         case 0x10:
-                            $h = $block['cpcHeader'] ?? $block['zxHeader'] ?? null;
-                            if ($h) {
-                                echo '<span class="info-badge header-badge">';
-                                echo '📁 ' . htmlspecialchars($h['name']);
-                                echo ' · ' . htmlspecialchars($h['fileTypeName']);
-                                echo '</span>';
+                            $bh = $block['cpcHeader'] ?? $block['zxHeader'] ?? null;
+                            if ($bh) {
+                                echo '<span class="info-badge header-badge">📁 ' . htmlspecialchars($bh['name']) . ' · ' . htmlspecialchars($bh['fileTypeName']) . '</span>';
                             } else {
                                 echo '<span class="info-badge data-badge">DATA</span>';
                             }
@@ -143,15 +138,12 @@
                             echo '<span class="info-muted">' . number_format($block['numPulses'] ?? 0) . ' pulses · ' . ($block['pulseLen'] ?? 0) . ' T</span>';
                             break;
                         case 0x20:
-                            echo '<span class="info-muted">Pause ' . number_format($block['pause'] ?? 0) . ' ms</span>';
+                            echo '<span class="info-muted">' . $t['blocks_pause_label'] . ' ' . number_format($block['pause'] ?? 0) . ' ms</span>';
                             break;
                         case 0x21:
                             echo '<span class="info-muted">' . htmlspecialchars($block['groupName'] ?? '') . '</span>';
                             break;
-                        default:
-                            break;
-                    }
-                    ?>
+                    } ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -163,12 +155,12 @@
     <?php if (!empty($d['descriptions'])): ?>
     <!-- ══ Descriptions texte ══════════════════════════════════════════════ -->
     <div class="spec-card" style="margin-top:24px">
-        <span class="card-title">📝 Descriptions texte</span>
+        <span class="card-title"><?= $t['blocks_desc_title'] ?></span>
         <table class="data-table">
             <thead>
                 <tr>
-                    <th class="center">Bloc</th>
-                    <th>Texte</th>
+                    <th class="center"><?= $t['blocks_col_block'] ?></th>
+                    <th><?= $t['blocks_col_text'] ?></th>
                 </tr>
             </thead>
             <tbody>

@@ -12,23 +12,23 @@
     <div class="tape-stats">
         <div class="stat-badge">
             <div class="val"><?= $d['blockCount'] ?></div>
-            <div class="lbl">Blocs</div>
+            <div class="lbl"><?= $t['tape_stat_blocks'] ?></div>
         </div>
         <div class="stat-badge">
             <div class="val" style="color:var(--green)"><?= count($d['catalogue']) ?></div>
-            <div class="lbl">Fichier(s)</div>
+            <div class="lbl"><?= $t['tape_stat_files'] ?></div>
         </div>
         <div class="stat-badge">
             <div class="val" style="color:var(--accent3)"><?= FormatHelper::msToTime($d['totalMs']) ?></div>
-            <div class="lbl">Durée totale</div>
+            <div class="lbl"><?= $t['tape_stat_duration'] ?></div>
         </div>
         <div class="stat-badge">
             <div class="val" style="color:var(--accent)"><?= number_format($d['totalSumData']) ?></div>
-            <div class="lbl">Sum DATA</div>
+            <div class="lbl"><?= $t['tape_stat_sum_data'] ?></div>
         </div>
     </div>
 
     <div class="new-upload-btn">
-        <a href="?" class="btn btn-sm">⬆ Nouveau fichier</a>
+        <a href="?" class="btn btn-sm"><?= $t['tape_new_file'] ?></a>
     </div>
 </div>
